@@ -1,0 +1,15 @@
+PHP Console (all self-contained within index.php) is a handy script to test and run your PHP code snippets.
+Instead of struggling with "php -a" (that usually doesn't work on Windows at all) you can just put index.php file somewhere 
+on your local WEB server space and access it via:
+
+http://localhost/index.php
+
+This script will run your PHP snippets and show generated output.
+
+WARNING: Do not upload it into your live Web Server! If hacker or even kiddie will get hold of it - he can destroy everything at your hosting account.
+Use it only on your local web space available only to you.
+
+License: free
+
+Created by Gleb Esman, gleb@memberwing.com
+http://www.memberwing.com/
