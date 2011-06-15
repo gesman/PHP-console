@@ -13,6 +13,18 @@
     font-weight:bold;
     width:40px;
     }
+#php_output {
+    width:800px;
+    overflow:auto;
+    border:2px solid #DDD;
+    background-color:#FFD;
+    padding:10px;
+    text-align:left;
+    font-size:13px;
+    }
+#console-table, #console-table td {
+    border:none;
+    }
 </style>
 </head>
 
@@ -33,13 +45,14 @@
 
         if (@$_POST['format_output'])
             {
-            $php_output = str_replace (" ", '&nbsp;', $php_output);
+            ///$php_output = str_replace (" ", '&nbsp;', $php_output);
+            $php_output = preg_replace('/(?:^|\G) /m', '&nbsp;', $php_output);  // Replace leading spaces with &nbsp;
             $php_output = str_replace ("\n", "<br />", $php_output);
             }
         }
     else
         {
-        $_POST['php_input'] = '$arr = array(1, "Hello <i>World</i>!", "abc"=>234);'."\n".'print_r($arr);';
+        $_POST['php_input'] = "echo '<h2>Your \$_SERVER array values:</h2>';\nprint_r (\$_SERVER);";
         }
 
 
@@ -52,24 +65,28 @@
 </form>
     <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
     <div style="margin:5px 0;">Type PHP code to execute:</div>
-        <table width="100%" border="0" cellspacing="1" cellpadding="1">
+        <table width="100%" border="0" cellspacing="1" cellpadding="1" id="console-table">
           <tr>
             <td width="8%" align="right" valign="top"><div class="courier smaller">&lt;?php</div></td>
             <td width="84%" align="center" valign="middle"><textarea name="php_input" cols="100" rows="15"><?php echo @$_POST['php_input']; ?></textarea></td>
             <td width="8%" align="left" valign="bottom"><div class="courier smaller">?&gt;</div></td>
           </tr>
           <tr>
-            <td colspan="3" align="center" valign="middle"><input name="button" type="submit" value="Execute!" /></td>
+            <td colspan="3" align="center" valign="middle"><input name="button" type="submit" value="Execute!" style="font-size:130%;color:#060;" /></td>
           </tr>
           <tr>
-            <td colspan="3" align="center" valign="middle">Format output (replace newlines with &lt;br /&gt; and spaces with &amp;nbsp;):
-              <input type="hidden" name="format_output" value="0" /><input name="format_output" type="checkbox" value="1" <?php echo $checkbox__format_output; ?> />
-            <label for="checkbox"></label></td>
+            <td colspan="3" align="center" valign="middle">
+                Format output (disable it when outputting HTML):&nbsp;&nbsp;
+                <input type="hidden" name="format_output" value="0" /><input name="format_output" type="checkbox" value="1" <?php echo $checkbox__format_output; ?> />
+                <br /><span style="font-size:90%;color:#555;">(replaces newlines with &lt;br /&gt; and leading spaces with &amp;nbsp;)</span>
+
+
+            </td>
           </tr>
           <tr>
             <td></td>
             <td align="center" valign="middle">
-                <div class="courier" style="border:2px solid #DDD;background-color:#FFD;padding:10px;text-align:left;font-size:13px;">
+                <div class="courier" id="php_output">
                     <?php echo $php_output; ?><br />
                 </div>
             </td>
