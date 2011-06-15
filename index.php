@@ -19,12 +19,23 @@
 <body>
 <?php
     $php_output = "";
+    if (!isset($_POST['format_output']) || $_POST['format_output'])
+        $checkbox__format_output = 'checked="checked"';
+    else
+        $checkbox__format_output = '';
+
     if (@$_POST['php_input'])
         {
         ob_start();
         eval($_POST['php_input']);
         $php_output = ob_get_contents();
         ob_end_clean();
+
+        if (@$_POST['format_output'])
+            {
+            $php_output = str_replace (" ", '&nbsp;', $php_output);
+            $php_output = str_replace ("\n", "<br />", $php_output);
+            }
         }
     else
         {
@@ -48,6 +59,11 @@
           </tr>
           <tr>
             <td colspan="3" align="center" valign="middle"><input name="button" type="submit" value="Execute!" /></td>
+          </tr>
+          <tr>
+            <td colspan="3" align="center" valign="middle">Format output (replace newlines with &lt;br /&gt; and spaces with &amp;nbsp;):
+              <input type="hidden" name="format_output" value="0" /><input name="format_output" type="checkbox" value="1" <?php echo $checkbox__format_output; ?> />
+            <label for="checkbox"></label></td>
           </tr>
           <tr>
             <td></td>
