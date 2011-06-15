@@ -45,7 +45,6 @@
 
         if (@$_POST['format_output'])
             {
-            ///$php_output = str_replace (" ", '&nbsp;', $php_output);
             $php_output = preg_replace('/(?:^|\G) /m', '&nbsp;', $php_output);  // Replace leading spaces with &nbsp;
             $php_output = str_replace ("\n", "<br />", $php_output);
             }
