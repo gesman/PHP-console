@@ -39,8 +39,9 @@
         }
     else
         {
-        $_POST['php_input'] = 'echo "<h1>Hello world!</h1>";';
+        $_POST['php_input'] = '$arr = array(1, "Hello <i>World</i>!", "abc"=>234);'."\n".'print_r($arr);';
         }
+
 
 ?>
 <div align="center" style="margin-top:30px;">
