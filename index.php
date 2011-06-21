@@ -38,6 +38,8 @@
 
     if (@$_POST['php_input'])
         {
+        if (get_magic_quotes_gpc()) 
+           $_POST['php_input'] = stripslashes($_POST['php_input']); 
         ob_start();
         eval($_POST['php_input']);
         $php_output = ob_get_contents();
